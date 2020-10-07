@@ -1,4 +1,6 @@
-/crt0.o
-/crti.o
-/crtn.o
-/libc.a
+**.d
+**.o
+**.iso
+**.elf
+**.vdi
+**.km

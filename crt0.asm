@@ -11,3 +11,6 @@ _start:
     mov rsi, rax
     mov rdi, 1
     syscall
+
+    ud2
+    hlt

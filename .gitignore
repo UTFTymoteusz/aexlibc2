@@ -1,0 +1,4 @@
+/crt0.o
+/crti.o
+/crtn.o
+/libc.a

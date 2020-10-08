@@ -6,3 +6,4 @@ DIR=${GCCPATH%/*}
 DST=$DIR/../lib/gcc/x86_64-aex2-elf/$VERSION/
 
 cp crti.o crt0.o crtn.o libc.a $DST
+cp -r include/ $DST

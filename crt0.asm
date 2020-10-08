@@ -8,8 +8,8 @@ _start:
     ; call _init
     call main
 
-    mov rsi, rax
-    mov rdi, 1
+    mov rdi, rax
+    mov r12, 1
     syscall
 
     ud2

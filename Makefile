@@ -22,8 +22,6 @@ INCLUDES := -I. -Iinclude/
 CCFLAGS := $(GFLAGS)		\
 	-ffreestanding			\
 	-masm=intel				\
-	-mcmodel=kernel			\
-	-fno-pic				\
 	-fno-stack-protector	\
 	-fno-omit-frame-pointer \
 	$(INCLUDES)
@@ -40,12 +38,12 @@ format:
 	clang-format -style=file -i ${CFILES} ${HFILES}
 
 all: $(OBJS)
-	$(AS) $(ASFLAGS) -o crt0.o crt0.asm
-	$(AS) $(ASFLAGS) -o crti.o crti.asm
-	$(AS) $(ASFLAGS) -o crtn.o crtn.asm
+	$(AS) $(ASFLAGS) -o bin/obj/crt0.o crt0.asm
+	$(AS) $(ASFLAGS) -o bin/obj/crti.o crti.asm
+	$(AS) $(ASFLAGS) -o bin/obj/crtn.o crtn.asm
 
 	@$(MKDIR) $(BIN)
-	ar r libc.a ${OBJS}
+	ar r bin/obj/libc.a ${OBJS}
 
 include $(shell find $(DEP_DEST) -type f -name *.d)
 

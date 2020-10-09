@@ -12,5 +12,5 @@ VERSION=$(x86_64-aex2-elf-gcc --version | grep -o '[0-9]\+\.[0-9]\+\.[0-9]')
 DIR=${GCCPATH%/*}
 DST=$DIR/../lib/gcc/x86_64-aex2-elf/$VERSION/
 
-cp crti.o crt0.o crtn.o libc.a $DST
+cp bin/obj/crti.o bin/obj/crt0.o bin/obj/crtn.o bin/obj/libc.a $DST
 cp -r include/ $DST

@@ -2,22 +2,22 @@ CC ?= gcc
 LD = ld
 AS = nasm
 
+ARCH ?= x64
+
 MKDIR = mkdir -p
 
 BIN      := bin/
 DEP_DEST := $(BIN)dep/
 OBJ_DEST := $(BIN)obj/
 
-ARCH = arch/x64/
-
-CFILES   := $(shell find . -type f -name '*.c'  -not -path './arch/*') $(shell find './$(ARCH).' -type f -name '*.c')
-HFILES   := $(shell find . -type f -name '*.h'  -not -path './arch/*') $(shell find './$(ARCH).' -type f -name '*.h')
+CFILES   := $(shell find . -type f -name '*.c'  -not -path './arch/*') $(shell find './arch/$(ARCH)/.' -type f -name '*.c')
+HFILES   := $(shell find . -type f -name '*.h'  -not -path './arch/*') $(shell find './arch/$(ARCH)/.' -type f -name '*.h')
 ASMFILES := $(shell find . -type f -name '*.asm')
 OBJS     := $(patsubst %.o, $(OBJ_DEST)%.o, $(CFILES:.c=.c.o) $(ASMFILES:.asm=.asm.o))
 
 GFLAGS = -O3 -Wall -Wextra -nostdlib -pipe
 
-INCLUDES := -I. -Iinclude/
+INCLUDES := -I. -Iinclude/ -Iarch/$(ARCH)/ -Iarch/$(ARCH)/include/
 
 CCFLAGS := $(GFLAGS)		\
 	-ffreestanding			\

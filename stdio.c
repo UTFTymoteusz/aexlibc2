@@ -1,5 +1,6 @@
 #include "stdio.h"
 
+#include "string.h"
 #include "syscallids.h"
 #include "unistd.h"
 
@@ -7,21 +8,24 @@ FILE* _stdin  = (FILE*) 0;
 FILE* _stdout = (FILE*) 1;
 FILE* _stderr = (FILE*) 2;
 
+int mode_from_str(const char* mode);
+
 FILE* fopen(const char* filename, const char* mode) {
-    long ret = syscall(SYS_OPEN, filename, 0);
+    long ret = syscall(SYS_OPEN, filename, mode_from_str(mode));
     if (ret < 0) {
         // set errno
         return NULL;
     }
+
     return (FILE*) ret;
 }
 
 size_t fread(const void* ptr, size_t size, size_t nitems, FILE* stream) {
-    return syscall(SYS_READ, (long) stream, (uint8_t*) ptr, nitems);
+    return syscall(SYS_READ, (long) stream, (uint8_t*) ptr, size * nitems);
 }
 
 size_t fwrite(const void* ptr, size_t size, size_t nitems, FILE* stream) {
-    return syscall(SYS_WRITE, (long) stream, (uint8_t*) ptr, nitems);
+    return syscall(SYS_WRITE, (long) stream, (uint8_t*) ptr, size * nitems);
 }
 
 int fclose(FILE* stream) {
@@ -59,4 +63,17 @@ int putchar(int c) {
 
 int putc(int c, FILE* stream) {
     return fwrite(&c, 1, 1, stream);
+}
+
+int mode_from_str(const char* mode) {
+    if (strcmp(mode, "r"))
+        return 1;
+
+    if (strcmp(mode, "w"))
+        return 2;
+
+    if (mode[1] == '+')
+        return 1 | 2;
+
+    return 0;
 }

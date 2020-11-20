@@ -1,5 +1,6 @@
 #include "stdio.h"
 
+#include "errno.h"
 #include "string.h"
 #include "syscallids.h"
 #include "unistd.h"
@@ -12,10 +13,8 @@ int mode_from_str(const char* mode);
 
 FILE* fopen(const char* filename, const char* mode) {
     long ret = syscall(SYS_OPEN, filename, mode_from_str(mode));
-    if (ret < 0) {
-        // set errno
+    if (ret < 0)
         return NULL;
-    }
 
     return (FILE*) ret;
 }
@@ -57,11 +56,13 @@ int getc(FILE* stream) {
     return c;
 }
 
-int putchar(int c) {
+int putchar(int i) {
+    char c = i;
     return fwrite(&c, 1, 1, stdout);
 }
 
-int putc(int c, FILE* stream) {
+int putc(int i, FILE* stream) {
+    char c = i;
     return fwrite(&c, 1, 1, stream);
 }
 

@@ -43,6 +43,13 @@ int vfprintf(FILE* stream, const char* format, va_list args) {
 
                 written++;
             } break;
+            case 'i': {
+                int i = va_arg(args, int);
+                itoa(i, itoa_buffer, 10);
+
+                print(itoa_buffer, strlen(itoa_buffer), stream);
+                written += strlen(itoa_buffer);
+            } break;
             default:
                 break;
             }

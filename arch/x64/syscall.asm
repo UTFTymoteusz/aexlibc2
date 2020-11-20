@@ -1,5 +1,7 @@
 [BITS 64]
 
+extern _set_errno ; a very temporary fix because i cant be bothered to figure out how to directly get the tls offsets lol
+
 global syscall
 syscall:
     push rbp
@@ -19,6 +21,15 @@ syscall:
     ; r9 e
 
     syscall
+
+    push rax
+    push rdx
+
+    mov edi, r12d
+    call _set_errno
+
+    pop rdx
+    pop rax
 
     pop r15
     pop r14

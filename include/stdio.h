@@ -19,6 +19,10 @@ extern FILE *_stdin, *_stdout, *_stderr;
 #define stdout _stdout
 #define stderr _stderr
 
+#define STDIN_FILENO 0
+#define STDOUT_FILENO 1
+#define STDERR_FILENO 2
+
 FILE*  fopen(const char* filename, const char* mode);
 size_t fread(const void* ptr, size_t size, size_t nitems, FILE* stream);
 size_t fwrite(const void* ptr, size_t size, size_t nitems, FILE* stream);

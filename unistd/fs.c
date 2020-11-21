@@ -17,6 +17,10 @@ int close(int fd) {
     return syscall(SYS_CLOSE, (long) fd);
 }
 
+int dup(int fd) {
+    return syscall(SYS_DUP, (long) fd);
+}
+
 int isatty(int fd) {
     return syscall(SYS_ISATTY, fd);
 }

@@ -9,7 +9,7 @@ _start:
     call main
 
     mov rdi, rax
-    mov r12, 1
+    mov r12, 0
     syscall
 
     ud2

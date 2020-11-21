@@ -18,6 +18,8 @@ int          usleep(long ns);
 
 ssize_t read(int fd, void* buffer, size_t len);
 ssize_t write(int fd, const void* buffer, size_t len);
+int     close(int fd);
+int     dup(int fd);
 
 int isatty(int fd);
 
@@ -28,10 +30,8 @@ int          access(const char *, int);
 unsigned     alarm(unsigned);
 int          chdir(const char *);
 int          chown(const char *, uid_t, gid_t);
-int          close(int);
 size_t       confstr(int, char *, size_t);
 char        *crypt(const char *, const char *);
-int          dup(int);
 int          dup2(int, int);
 void         _exit(int);
 void         encrypt(char [64], int);

@@ -20,11 +20,11 @@ FILE* fopen(const char* filename, const char* mode) {
 }
 
 size_t fread(const void* ptr, size_t size, size_t nitems, FILE* stream) {
-    return syscall(SYS_READ, (long) stream, (uint8_t*) ptr, size * nitems);
+    return syscall(SYS_READ, (long) stream, ptr, size * nitems);
 }
 
 size_t fwrite(const void* ptr, size_t size, size_t nitems, FILE* stream) {
-    return syscall(SYS_WRITE, (long) stream, (uint8_t*) ptr, size * nitems);
+    return syscall(SYS_WRITE, (long) stream, ptr, size * nitems);
 }
 
 int fclose(FILE* stream) {

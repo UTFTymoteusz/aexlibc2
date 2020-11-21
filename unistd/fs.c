@@ -13,6 +13,10 @@ ssize_t write(int fd, const void* buffer, size_t len) {
     return syscall(SYS_WRITE, (long) fd, buffer, len);
 }
 
+int close(int fd) {
+    return syscall(SYS_CLOSE, (long) fd);
+}
+
 int isatty(int fd) {
     return syscall(SYS_ISATTY, fd);
 }

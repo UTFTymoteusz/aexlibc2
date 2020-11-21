@@ -120,7 +120,7 @@ void* memset(void* bufptr, int value, size_t size) {
     return bufptr;
 }
 
-int strcmp(char* left, char* right) {
+int strcmp(const char* left, const char* right) {
     int i = 0;
 
     while (true) {
@@ -136,7 +136,7 @@ int strcmp(char* left, char* right) {
     return 0;
 }
 
-char* strcpy(char* dst, char* src) {
+char* strcpy(char* dst, const char* src) {
     int i = 0;
 
     while (src[i] != '\0') {

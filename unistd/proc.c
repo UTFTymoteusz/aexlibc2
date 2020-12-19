@@ -2,7 +2,7 @@
 #include <unistd.h>
 
 unsigned int sleep(unsigned int seconds) {
-    syscall(SYS_USLEEP, seconds * 1000000000);
+    syscall(SYS_USLEEP, (long) seconds * 1000000000);
     return 0;
 }
 

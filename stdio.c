@@ -83,3 +83,9 @@ void perror(const char* string) {
     int error = errno;
     printf("%s: %s\n", string, strerror(error));
 }
+
+// make this less stupid later
+int puts(const char* str) {
+    printf("%s\n", str);
+    return strlen(str);
+}

@@ -40,3 +40,5 @@ int putchar(int c);
 int putc(int c, FILE* stream);
 
 void perror(const char* string);
+
+int puts(const char* str);

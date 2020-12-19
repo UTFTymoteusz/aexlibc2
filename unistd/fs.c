@@ -25,6 +25,14 @@ int dup2(int srcfd, int dstfd) {
     return syscall(SYS_DUP2, (long) srcfd, (long) dstfd);
 }
 
+int chdir(const char* path) {
+    return syscall(SYS_CHDIR, path);
+}
+
+char* getcwd(char* buffer, size_t buffer_len) {
+    return (char*) syscall(SYS_GETCWD, buffer, buffer_len);
+}
+
 int isatty(int fd) {
     return syscall(SYS_ISATTY, fd);
 }

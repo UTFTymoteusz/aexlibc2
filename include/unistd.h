@@ -21,8 +21,9 @@ ssize_t write(int fd, const void* buffer, size_t len);
 int     close(int fd);
 int     dup(int fd);
 int     dup2(int srcfd, int dstfd);
-
-int isatty(int fd);
+int     chdir(const char* path);
+char*   getcwd(char* buffer, size_t buffer_len);
+int     isatty(int fd);
 
 int pipe(int fds[2]);
 
@@ -33,7 +34,6 @@ pid_t getpid();
 /*
 int          access(const char *, int);
 unsigned     alarm(unsigned);
-int          chdir(const char *);
 int          chown(const char *, uid_t, gid_t);
 size_t       confstr(int, char *, size_t);
 char        *crypt(const char *, const char *);
@@ -53,7 +53,6 @@ int          fexecve(int, char *const [], char *const []);
 long         fpathconf(int, int);
 int          fsync(int);
 int          ftruncate(int, off_t);
-char        *getcwd(char *, size_t);
 gid_t        getegid(void);
 uid_t        geteuid(void);
 gid_t        getgid(void);

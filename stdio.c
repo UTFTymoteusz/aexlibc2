@@ -78,3 +78,8 @@ int mode_from_str(const char* mode) {
 
     return 0;
 }
+
+void perror(const char* string) {
+    int error = errno;
+    printf("%s: %s\n", string, strerror(error));
+}

@@ -13,3 +13,5 @@ size_t strlen(const char* str);
 
 char* itoa(long, char*, int);
 long  atoi(char*);
+
+char* strerror(int errnum);

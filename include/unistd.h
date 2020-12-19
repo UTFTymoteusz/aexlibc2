@@ -20,10 +20,15 @@ ssize_t read(int fd, void* buffer, size_t len);
 ssize_t write(int fd, const void* buffer, size_t len);
 int     close(int fd);
 int     dup(int fd);
+int     dup2(int srcfd, int dstfd);
 
 int isatty(int fd);
 
 int pipe(int fds[2]);
+
+pid_t fork();
+int   execve(const char* path, char* const argv[], char* const envp[]);
+pid_t getpid();
 
 /*
 int          access(const char *, int);
@@ -32,14 +37,12 @@ int          chdir(const char *);
 int          chown(const char *, uid_t, gid_t);
 size_t       confstr(int, char *, size_t);
 char        *crypt(const char *, const char *);
-int          dup2(int, int);
 void         _exit(int);
 void         encrypt(char [64], int);
 int          execl(const char *, const char *, ...);
 int          execle(const char *, const char *, ...);
 int          execlp(const char *, const char *, ...);
 int          execv(const char *, char *const []);
-int          execve(const char *, char *const [], char *const []);
 int          execvp(const char *, char *const []);
 int          faccessat(int, const char *, int, int);
 int          fchdir(int);
@@ -47,7 +50,6 @@ int          fchown(int, uid_t, gid_t);
 int          fchownat(int, const char *, uid_t, gid_t, int);
 int          fdatasync(int);
 int          fexecve(int, char *const [], char *const []);
-pid_t        fork(void);
 long         fpathconf(int, int);
 int          fsync(int);
 int          ftruncate(int, off_t);
@@ -63,7 +65,6 @@ int          getlogin_r(char *, size_t);
 int          getopt(int, char * const [], const char *);
 pid_t        getpgid(pid_t);
 pid_t        getpgrp(void);
-pid_t        getpid(void);
 pid_t        getppid(void);
 pid_t        getsid(pid_t);
 uid_t        getuid(void);

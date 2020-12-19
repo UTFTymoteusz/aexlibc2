@@ -60,6 +60,6 @@ $(OBJ_DEST)%.asm.o : %.asm
 	$(AS) $(ASFLAGS) $< -o $@
 
 install:
-	chmod a+x ./install.sh
+	-chmod a+x ./install.sh
 
 	./install.sh

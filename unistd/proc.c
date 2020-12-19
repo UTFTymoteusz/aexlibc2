@@ -10,3 +10,15 @@ int usleep(long ns) {
     syscall(SYS_USLEEP, ns);
     return 0;
 }
+
+pid_t fork() {
+    return syscall(SYS_FORK);
+}
+
+int execve(const char* path, char* const argv[], char* const envp[]) {
+    return syscall(SYS_EXECVE, path, argv, envp);
+}
+
+pid_t getpid() {
+    return syscall(SYS_GETPID);
+}

@@ -36,3 +36,7 @@ char* getcwd(char* buffer, size_t buffer_len) {
 int isatty(int fd) {
     return syscall(SYS_ISATTY, fd);
 }
+
+int access(const char* path, int mode) {
+    return syscall(SYS_ACCESS, path, mode);
+}

@@ -24,6 +24,7 @@ int     dup2(int srcfd, int dstfd);
 int     chdir(const char* path);
 char*   getcwd(char* buffer, size_t buffer_len);
 int     isatty(int fd);
+int     access(const char* path, int mode);
 
 int pipe(int fds[2]);
 
@@ -32,7 +33,6 @@ int   execve(const char* path, char* const argv[], char* const envp[]);
 pid_t getpid();
 
 /*
-int          access(const char *, int);
 unsigned     alarm(unsigned);
 int          chown(const char *, uid_t, gid_t);
 size_t       confstr(int, char *, size_t);

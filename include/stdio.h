@@ -28,6 +28,7 @@ size_t fread(const void* ptr, size_t size, size_t nitems, FILE* stream);
 size_t fwrite(const void* ptr, size_t size, size_t nitems, FILE* stream);
 int    fclose(FILE* stream);
 int    fseek(FILE* stream, long offset, int mode);
+int    fileno(FILE* stream);
 
 int vfprintf(FILE* stream, const char* format, va_list parameters);
 int printf(const char* format, ...);

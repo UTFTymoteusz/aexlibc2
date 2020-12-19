@@ -9,3 +9,6 @@ typedef long ssize_t;
 typedef int uid_t;
 typedef int gid_t;
 typedef int pid_t;
+
+typedef int dev_t;
+typedef int ino_t;

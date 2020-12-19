@@ -44,6 +44,10 @@ int fseek(FILE* stream, long offset, int mode) {
     return 0;
 }
 
+int fileno(FILE* stream) {
+    return (int) (size_t) stream;
+}
+
 int getchar() {
     char c;
     fread(&c, 1, 1, stdin);

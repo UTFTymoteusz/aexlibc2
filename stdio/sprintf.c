@@ -127,7 +127,8 @@ int sprintf(char* dst, const char* format, ...) {
             dst += len;
         }
     }
-    dst[0] = '\0';
+
+    *dst = '\0';
 
     va_end(parameters);
     return written;

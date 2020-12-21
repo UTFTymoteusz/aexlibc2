@@ -51,7 +51,7 @@ int vfprintf(FILE* stream, const char* format, va_list args) {
                 written += strlen(itoa_buffer);
             } break;
             case 'p': {
-                int i = va_arg(args, size_t);
+                size_t i = va_arg(args, size_t);
                 itoa(i, itoa_buffer, 16);
 
                 print(itoa_buffer, strlen(itoa_buffer), stream);

@@ -41,9 +41,6 @@ void*    alloc_chunk(pool_t* pool, chunk_t* chunk, uint32_t piece_count);
 void     debug_print_pools();
 
 void* malloc(size_t size) {
-    printf("menela: 0x%p\n", &first_pool);
-    printf("menelb: 0x%p\n", first_pool);
-
     if (!first_pool)
         first_pool = alloc_pool(DEFAULT_POOL_SIZE);
 

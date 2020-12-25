@@ -1,5 +1,5 @@
-#include <syscallids.h>
-#include <unistd.h>
+#include "syscallids.h"
+#include "unistd.h"
 
 unsigned int sleep(unsigned int seconds) {
     syscall(SYS_USLEEP, (long) seconds * 1000000000);
@@ -12,6 +12,7 @@ int usleep(long ns) {
 }
 
 pid_t fork() {
+    __sync_synchronize();
     return syscall(SYS_FORK);
 }
 

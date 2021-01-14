@@ -1,8 +1,7 @@
 #pragma once
 
+#include "stddef.h"
 #include "sys/types.h"
-
-#include <stddef.h>
 
 enum perm_test_t {
     R_OK = 0x01,

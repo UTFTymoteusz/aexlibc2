@@ -1,12 +1,13 @@
 #include "stdlib.h"
 
+#include "stdbool.h"
+#include "stddef.h"
+#include "stdint.h"
 #include "stdio.h"
 #include "string.h"
-#include <sys/mman.h>
-
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
+#include "sys/mman.h"
+#include "syscallids.h"
+#include "unistd.h"
 
 #define PIECE_SIZE 16
 #define DEFAULT_POOL_SIZE 1024 * 256
@@ -14,6 +15,10 @@
 #define ALLOC_DATATYPE uint32_t
 
 #define ceil_alloc(x) (((x + PIECE_SIZE - 1) / PIECE_SIZE) * PIECE_SIZE)
+
+void exit(int status) {
+    syscall(SYS_EXIT, status);
+}
 
 struct pool {
     uint32_t     pieces;

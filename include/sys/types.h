@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stdint.h>
+#include "stdint.h"
 
 #if INTPTR_MAX == INT32_MAX
 typedef int ssize_t;

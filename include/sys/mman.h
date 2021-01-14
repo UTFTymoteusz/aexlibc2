@@ -1,8 +1,7 @@
 #pragma once
 
+#include "stddef.h"
 #include "sys/types.h"
-
-#include <stddef.h>
 
 enum prot_flags_t {
     PROT_NONE  = 0x00,

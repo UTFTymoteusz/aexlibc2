@@ -23,3 +23,7 @@ int execve(const char* path, char* const argv[], char* const envp[]) {
 pid_t getpid() {
     return syscall(SYS_GETPID);
 }
+
+int nice(int nice) {
+    return syscall(SYS_NICE, nice);
+}

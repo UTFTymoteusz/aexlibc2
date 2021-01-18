@@ -15,6 +15,7 @@ long syscall(long id, ...);
 unsigned int sleep(unsigned int seconds);
 int          usleep(long ns);
 
+int     access(const char* path, int mode);
 ssize_t read(int fd, void* buffer, size_t len);
 ssize_t write(int fd, const void* buffer, size_t len);
 int     close(int fd);
@@ -23,13 +24,13 @@ int     dup2(int srcfd, int dstfd);
 int     chdir(const char* path);
 char*   getcwd(char* buffer, size_t buffer_len);
 int     isatty(int fd);
-int     access(const char* path, int mode);
 
 int pipe(int fds[2]);
 
 pid_t fork();
 int   execve(const char* path, char* const argv[], char* const envp[]);
 pid_t getpid();
+int   nice(int nice);
 
 gid_t getegid();
 uid_t geteuid();
@@ -42,7 +43,6 @@ int setgid(gid_t gid);
 int setuid(uid_t uid);
 int setregid(gid_t rgid, gid_t egid);
 int setreuid(uid_t ruid, uid_t euid);
-
 /*
 unsigned     alarm(unsigned);
 int          chown(const char *, uid_t, gid_t);
@@ -79,7 +79,6 @@ int          link(const char *, const char *);
 int          linkat(int, const char *, int, const char *, int);
 int          lockf(int, int, off_t);
 off_t        lseek(int, off_t, int);
-int          nice(int);
 long         pathconf(const char *, int);
 int          pause(void);
 ssize_t      pread(int, void *, size_t, off_t);

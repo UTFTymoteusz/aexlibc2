@@ -13,6 +13,8 @@ enum prot_flags_t {
 enum mmap_flags_t {
     MAP_NONE      = 0x00,
     MAP_PRIVATE   = 0x01,
+    MAP_SHARED    = 0x02,
+    MAP_FIXED     = 0x04,
     MAP_ANONYMOUS = 0x10,
 };
 

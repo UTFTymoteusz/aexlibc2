@@ -9,15 +9,15 @@
 // implement perror pls
 
 struct file {
-    // temporary, i cant malloc() yet
+    int handle;
 };
 typedef struct file FILE;
 
-extern FILE *_stdin, *_stdout, *_stderr;
+extern FILE _stdin, _stdout, _stderr;
 
-#define stdin _stdin
-#define stdout _stdout
-#define stderr _stderr
+#define stdin (&_stdin)
+#define stdout (&_stdout)
+#define stderr (&_stderr)
 
 #define STDIN_FILENO 0
 #define STDOUT_FILENO 1

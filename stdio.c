@@ -1,51 +1,55 @@
 #include "stdio.h"
 
 #include "errno.h"
+#include "stdlib.h"
 #include "string.h"
 #include "syscallids.h"
 #include "unistd.h"
 
-FILE* _stdin  = (FILE*) 0;
-FILE* _stdout = (FILE*) 1;
-FILE* _stderr = (FILE*) 2;
+FILE _stdin;
+FILE _stdout;
+FILE _stderr;
 
 int mode_from_str(const char* mode);
+
+void stdio_init() {
+    _stdin.handle  = 0;
+    _stdout.handle = 1;
+    _stderr.handle = 2;
+}
 
 FILE* fopen(const char* filename, const char* mode) {
     long ret = syscall(SYS_OPEN, filename, mode_from_str(mode));
     if (ret < 0)
         return NULL;
 
-    return (FILE*) ret;
+    FILE* file   = (FILE*) malloc(sizeof(FILE));
+    file->handle = ret;
+
+    return file;
 }
 
 size_t fread(const void* ptr, size_t size, size_t nitems, FILE* stream) {
-    return syscall(SYS_READ, (long) stream, ptr, size * nitems);
+    return syscall(SYS_READ, stream->handle, ptr, size * nitems);
 }
 
 size_t fwrite(const void* ptr, size_t size, size_t nitems, FILE* stream) {
-    return syscall(SYS_WRITE, (long) stream, ptr, size * nitems);
+    return syscall(SYS_WRITE, stream->handle, ptr, size * nitems);
 }
 
 int fclose(FILE* stream) {
-    return syscall(SYS_CLOSE, (long) stream);
+    int ret = syscall(SYS_CLOSE, stream->handle);
+    free(stream);
+
+    return ret;
 }
 
 int fseek(FILE* stream, long offset, int mode) {
-    switch (mode) {
-    case 0:
-        return syscall(SYS_SEEK, (long) stream, offset);
-    case 1:
-    case 2:
-        // unimplemented
-        break;
-    }
-
-    return 0;
+    return syscall(SYS_SEEK, stream->handle, offset, mode);
 }
 
 int fileno(FILE* stream) {
-    return (int) (size_t) stream;
+    return stream->handle;
 }
 
 int getchar() {
@@ -88,7 +92,7 @@ void perror(const char* string) {
     printf("%s: %s\n", string, strerror(error));
 }
 
-// make this less stupid later
+// TODO: make this less stupid
 int puts(const char* str) {
     printf("%s\n", str);
     return strlen(str);

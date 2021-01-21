@@ -2,10 +2,18 @@ SECTION .text
 
 EXTERN _init
 EXTERN main
+EXTERN stdio_init
 
 GLOBAL _start
 _start:
-    ; call _init
+    push rdi
+    push rsi
+
+    call stdio_init
+
+    pop rsi
+    pop rdi
+
     call main
 
     mov rdi, rax

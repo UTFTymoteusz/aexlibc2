@@ -7,6 +7,6 @@
 #define M_PI_4 (M_PI / 4)
 
 #define M_1_PI (1 / M_PI)
-#define M_2_PI (2 / M_PI / 2)
+#define M_2_PI (2 / M_PI)
 
 // TODO: finish

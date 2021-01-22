@@ -18,17 +18,17 @@ struct stat {
     blkcnt_t  st_blocks;
 };
 
-#define S_IFMT 0x0FFF
-#define S_IFBLK 0x0006
-#define S_IFCHR 0x0002
-#define S_IFNET 0x000A
-#define S_IFREG 0x0001
-#define S_IFDIR 0x0010
-#define S_IFLNK 0x0020
-#define S_IFFIFO 0x0040
-#define S_IFMQ 0x0100
-#define S_IFSEM 0x0200
-#define S_IFSHM 0x0400
+#define S_IFMT 0x0FFF0000
+#define S_IFBLK 0x00060000
+#define S_IFCHR 0x00020000
+#define S_IFNET 0x000A0000
+#define S_IFREG 0x00010000
+#define S_IFDIR 0x00100000
+#define S_IFLNK 0x00200000
+#define S_IFFIFO 0x00400000
+#define S_IFMQ 0x01000000
+#define S_IFSEM 0x02000000
+#define S_IFSHM 0x04000000
 
 #define S_IRWXU 0x0700
 #define S_IRUSR 0x0400

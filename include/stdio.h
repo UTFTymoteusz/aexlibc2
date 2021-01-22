@@ -6,8 +6,6 @@
 
 #define EOF (-1)
 
-// implement perror pls
-
 struct file {
     int handle;
 };
@@ -27,7 +25,8 @@ FILE*  fopen(const char* filename, const char* mode);
 size_t fread(const void* ptr, size_t size, size_t nitems, FILE* stream);
 size_t fwrite(const void* ptr, size_t size, size_t nitems, FILE* stream);
 int    fclose(FILE* stream);
-int    fseek(FILE* stream, long offset, int mode);
+long   fseek(FILE* stream, long offset, int mode);
+long   ftell(FILE* stream);
 int    fileno(FILE* stream);
 
 int vfprintf(FILE* stream, const char* format, va_list parameters);

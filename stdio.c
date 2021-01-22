@@ -44,8 +44,12 @@ int fclose(FILE* stream) {
     return ret;
 }
 
-int fseek(FILE* stream, long offset, int mode) {
+long fseek(FILE* stream, long offset, int mode) {
     return syscall(SYS_SEEK, stream->handle, offset, mode);
+}
+
+long ftell(FILE* stream) {
+    return syscall(SYS_SEEK, stream->handle, 0, 1);
 }
 
 int fileno(FILE* stream) {

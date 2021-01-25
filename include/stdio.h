@@ -1,8 +1,8 @@
 #pragma once
 
-#include "stdarg.h"
-#include "stddef.h"
-#include "stdint.h"
+#include <stdarg.h>
+#include <stddef.h>
+#include <stdint.h>
 
 #define EOF (-1)
 

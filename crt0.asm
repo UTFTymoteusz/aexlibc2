@@ -2,6 +2,7 @@ SECTION .text
 
 EXTERN _init
 EXTERN main
+EXTERN exit
 EXTERN stdio_init
 
 GLOBAL _start
@@ -15,10 +16,9 @@ _start:
     pop rdi
 
     call main
-
+    
     mov rdi, rax
-    mov r12, 0
-    syscall
+    call exit
 
     ud2
     hlt

@@ -15,10 +15,6 @@
 
 #define ceil_alloc(x) (((x + PIECE_SIZE - 1) / PIECE_SIZE) * PIECE_SIZE)
 
-void exit(int status) {
-    syscall(SYS_EXIT, status);
-}
-
 struct pool {
     uint32_t     pieces;
     struct pool *prev, *next;

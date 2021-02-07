@@ -4,8 +4,8 @@
 
 #include <stdint.h>
 
-typedef int      socklen_t;
-typedef uint32_t sa_family_t;
+typedef int     socklen_t;
+typedef uint8_t sa_family_t;
 
 struct iovec;
 

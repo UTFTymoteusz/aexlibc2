@@ -14,7 +14,7 @@ struct dir {
 
 typedef struct dir DIR;
 
-int            alphasort(const struct dirent* a, const struct dirent* b);
+int            alphasort(const struct dirent** a, const struct dirent** b);
 int            closedir(DIR*);
 int            dirfd(DIR*);
 DIR*           fdopendir(int);

@@ -12,3 +12,4 @@ char*  strcpy(char* dst, const char* src);
 size_t strlen(const char* str);
 
 char* strerror(int errnum);
+int   strcoll(const char* s1, const char* s2);

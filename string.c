@@ -187,3 +187,7 @@ char* strerror(int errnum) {
 
     return (char*) error_names[errnum];
 }
+
+int strcoll(const char* s1, const char* s2) {
+    return strcmp(s1, s2);
+}

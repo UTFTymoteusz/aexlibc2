@@ -2,9 +2,14 @@
 
 #include "errno.h"
 #include "stdlib.h"
+#include "string.h"
 #include "sys/stat.h"
 #include "syscallids.h"
 #include "unistd.h"
+
+int alphasort(const struct dirent** a, const struct dirent** b) {
+    return strcoll((*a)->d_name, (*b)->d_name);
+}
 
 int closedir(DIR* dir) {
     int handle = dir->handle;
@@ -32,6 +37,10 @@ DIR* opendir(const char* path) {
     dir->handle = handle;
 
     return dir;
+}
+
+int dirfd(DIR* dir) {
+    return dir->handle;
 }
 
 struct dirent* readdir(DIR* dir) {

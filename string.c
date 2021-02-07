@@ -100,62 +100,6 @@ void reverse(char str[], int length) {
         end--;
     }
 }
-
-char* itoa(long value, char* str, int base) {
-    char* rc;
-    char* ptr;
-    char* low;
-    // Check for supported base.
-    if (base < 2 || base > 36) {
-        *str = '\0';
-        return str;
-    }
-    rc = ptr = str;
-    // Set '-' for negative decimals.
-    if (value < 0 && base == 10)
-        *ptr++ = '-';
-
-    // Remember where the numbers start.
-    low = ptr;
-    // The actual conversion.
-    do {
-        // Modulo is negative for negative value. This trick makes abs() unnecessary.
-        *ptr++ =
-            "zyxwvutsrqponmlkjihgfedcba9876543210123456789abcdefghijklmnopqrstuvwxyz"[35 +
-                                                                                      value % base];
-        value /= base;
-    } while (value);
-    // Terminating the string.
-    *ptr-- = '\0';
-    // Invert the numbers.
-    while (low < ptr) {
-        char tmp = *low;
-
-        *low++ = *ptr;
-        *ptr-- = tmp;
-    }
-    return rc;
-}
-
-long atoi(char* str) {
-    int res  = 0; // Initialize result
-    int sign = 1; // Initialize sign as positive
-    int i    = 0; // Initialize index of first digit
-
-    // If number is negative, then update sign
-    if (str[0] == '-') {
-        sign = -1;
-        ++i; // Also update index of first digit
-    }
-
-    // Iterate through all digits and update the result
-    for (; str[i] != '\0'; ++i)
-        res = res * 10 + str[i] - '0';
-
-    // Return result with sign
-    return sign * res;
-}
-
 int memcmp(const void* aptr, const void* bptr, size_t size) {
     const unsigned char* a = (const unsigned char*) aptr;
     const unsigned char* b = (const unsigned char*) bptr;

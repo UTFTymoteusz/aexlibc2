@@ -11,7 +11,4 @@ int    strcmp(const char* left, const char* right);
 char*  strcpy(char* dst, const char* src);
 size_t strlen(const char* str);
 
-char* itoa(long, char*, int);
-long  atoi(char*);
-
 char* strerror(int errnum);

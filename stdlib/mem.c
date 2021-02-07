@@ -1,9 +1,8 @@
-#include "stdlib.h"
-
 #include "stdbool.h"
 #include "stddef.h"
 #include "stdint.h"
 #include "stdio.h"
+#include "stdlib.h"
 #include "string.h"
 #include "sys/mman.h"
 #include "syscallids.h"
@@ -118,11 +117,10 @@ void free(void* ptr) {
 
     chunk->free = true;
 
-    // merge free chunks here
+    // TODO: merge free chunks here
 }
 
 // Privates
-
 pool_t* alloc_pool(uint32_t size) {
     void* mem = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
     // add checks

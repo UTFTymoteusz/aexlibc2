@@ -43,6 +43,13 @@ int dirfd(DIR* dir) {
     return dir->handle;
 }
 
+DIR* fdopendir(int fd) {
+    DIR* dir    = (DIR*) malloc(sizeof(DIR));
+    dir->handle = fd;
+
+    return dir;
+}
+
 struct dirent* readdir(DIR* dir) {
     if (syscall(SYS_READDIR, dir->handle, &dir->ent) < 0)
         return NULL;

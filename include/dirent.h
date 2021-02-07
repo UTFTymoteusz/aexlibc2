@@ -14,10 +14,10 @@ struct dir {
 
 typedef struct dir DIR;
 
-int alphasort(const struct dirent* a, const struct dirent* b);
-int closedir(DIR*);
-int dirfd(DIR*);
-// DIR           *fdopendir(int);
+int            alphasort(const struct dirent* a, const struct dirent* b);
+int            closedir(DIR*);
+int            dirfd(DIR*);
+DIR*           fdopendir(int);
 DIR*           opendir(const char*);
 struct dirent* readdir(DIR*);
 // int            readdir_r(DIR*, struct dirent*, struct dirent**);

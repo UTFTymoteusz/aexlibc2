@@ -9,6 +9,7 @@
 #define EXIT_FAILURE 1
 
 void exit(int status);
+void abort();
 
 void* malloc(size_t size);
 void* calloc(size_t nmeb, size_t size);

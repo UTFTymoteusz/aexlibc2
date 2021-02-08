@@ -19,10 +19,12 @@ syscall:
     mov rdi, rsi ; a
     mov rsi, rdx ; b
     mov r14, rcx ; c
-    ; r8 d
-    ; r9 e
+    ; r8      d
+    ; r9      e
+    pop r10 ; f
 
     syscall
+    sub rsp, 8
 
     push rax
     push rdx

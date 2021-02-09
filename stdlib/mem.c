@@ -10,6 +10,7 @@
 
 #define PIECE_SIZE 16
 #define DEFAULT_POOL_SIZE 1024 * 256
+#define MMAP_CUTOFF 1024 * 64
 
 #define ALLOC_DATATYPE uint32_t
 
@@ -41,6 +42,18 @@ void*    alloc_chunk(pool_t* pool, chunk_t* chunk, uint32_t piece_count);
 void     debug_print_pools();
 
 void* malloc(size_t size) {
+    if (size >= MMAP_CUTOFF) {
+        chunk_t* chunk = mmap(NULL, ceil_alloc(size) + PIECE_SIZE, PROT_READ | PROT_WRITE,
+                              MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+
+        chunk->pieces  = ceil_alloc(size) / PIECE_SIZE + 1;
+        chunk->next    = 0x00;
+        chunk->prev    = 0xFFFFFFFF;
+        chunk->mmapped = true;
+
+        return (void*) ((size_t) chunk + PIECE_SIZE);
+    }
+
     if (!first_pool)
         first_pool = alloc_pool(DEFAULT_POOL_SIZE);
 
@@ -110,6 +123,11 @@ void* realloc(void* ptr, size_t size) {
 void free(void* ptr) {
     pool_t*  pool  = first_pool;
     chunk_t* chunk = (chunk_t*) ((size_t) ptr - PIECE_SIZE);
+
+    if (chunk->mmapped) {
+        munmap(chunk, chunk->pieces * PIECE_SIZE);
+        return;
+    }
 
     chunk->free = true;
 

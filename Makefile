@@ -6,7 +6,7 @@ ARCH ?= x86_64
 
 MKDIR = mkdir -p
 
-BIN      := bin/
+BIN      := /tmp/aex2/libc/
 DEP_DEST := $(BIN)dep/
 OBJ_DEST := $(BIN)obj/
 
@@ -38,17 +38,17 @@ format:
 	clang-format -style=file -i ${CFILES} ${HFILES}
 
 all: $(OBJS)
-	$(AS) $(ASFLAGS) -o bin/obj/crt0.o crt0.asm
-	$(AS) $(ASFLAGS) -o bin/obj/crti.o crti.asm
-	$(AS) $(ASFLAGS) -o bin/obj/crtn.o crtn.asm
+	$(AS) $(ASFLAGS) -o $(OBJ_DEST)crt0.o crt0.asm
+	$(AS) $(ASFLAGS) -o $(OBJ_DEST)crti.o crti.asm
+	$(AS) $(ASFLAGS) -o $(OBJ_DEST)crtn.o crtn.asm
 
 	@$(MKDIR) $(BIN)
-	ar r bin/obj/libc.a ${OBJS}
+	ar r $(OBJ_DEST)libc.a ${OBJS}
 
 include $(shell find $(DEP_DEST) -type f -name *.d)
 
 copy:
-	@cp bin/obj/libc.a "$(COPY_DIR)"
+	@cp $(OBJ_DEST)libc.a "$(COPY_DIR)"
 
 clean:
 	rm -rf $(BIN)

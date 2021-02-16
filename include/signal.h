@@ -108,7 +108,7 @@ struct siginfo_t {
     int si_errno;
 
     pid_t si_pid;
-    // uid_t si_uid; TODO: Make this a reality
+    uid_t si_uid;
 
     void*        si_addr;
     int          si_status;

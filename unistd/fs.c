@@ -16,6 +16,10 @@ int close(int fd) {
     return syscall(SYS_CLOSE, (long) fd);
 }
 
+off_t lseek(int fd, off_t offset, int mode) {
+    return syscall(SYS_SEEK, (long) fd, offset, mode);
+}
+
 int dup(int fd) {
     return syscall(SYS_DUP, (long) fd);
 }

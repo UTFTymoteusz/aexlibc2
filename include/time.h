@@ -28,4 +28,6 @@ struct itimerspec {
     struct timespec it_value;
 };
 
+int nanosleep(const struct timespec* rqtp, struct timespec* rmtp);
+
 // TODO: finish

@@ -13,7 +13,6 @@ enum perm_test_t {
 long syscall(long id, ...);
 
 unsigned int sleep(unsigned int seconds);
-int          usleep(long ns);
 
 int     access(const char* path, int mode);
 ssize_t read(int fd, void* buffer, size_t len);

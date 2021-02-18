@@ -4,6 +4,7 @@
 #define assert(ignore) ((void) 0)
 #else
 #include <stdio.h>
+#include <stdlib.h>
 #define assert(condition)                                                                       \
     ({                                                                                          \
         if (!(condition)) {                                                                     \

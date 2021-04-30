@@ -1,3 +1,5 @@
+#include "errno.h"
+#include "stdbool.h"
 #include "stdlib.h"
 #include "string.h"
 #include "sys/signal.h"
@@ -5,7 +7,9 @@
 #include "unistd.h"
 
 void (**atexit_array)() = NULL;
-int atexit_count        = 0;
+int   atexit_count      = 0;
+int   env_len           = 2048;
+char* env_buffer        = NULL;
 
 int atexit(void (*func)()) {
     atexit_count++;
@@ -26,4 +30,27 @@ void exit(int status) {
 
 void abort() {
     kill(getpid(), SIGABRT);
+}
+
+bool getenvline(int index) {
+    if (!env_buffer)
+        env_buffer = (char*) malloc(env_len);
+
+    while (syscall(SYS_GETENV, index, env_buffer, env_len) == -1 && errno == ERANGE)
+        env_buffer = (char*) realloc(env_buffer, env_len *= 2);
+
+    return errno != EINVAL;
+}
+
+char* getenv(const char* name) {
+    int name_len = strlen(name);
+
+    for (int i = 0; getenvline(i); i++) {
+        if (memcmp(name, env_buffer, name_len) != 0 || env_buffer[name_len] != '=')
+            continue;
+
+        return env_buffer + name_len + 1;
+    }
+
+    return NULL;
 }

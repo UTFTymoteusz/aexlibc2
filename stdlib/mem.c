@@ -55,7 +55,7 @@ void* malloc(size_t size) {
     }
 
     if (!first_pool)
-        first_pool = alloc_pool(DEFAULT_POOL_SIZE);
+        first_pool = alloc_pool(65536);
 
     pool_t* pool = first_pool;
 

@@ -23,6 +23,8 @@ void* calloc(size_t nmeb, size_t size);
 void* realloc(void* space, size_t size);
 void  free(void* ptr);
 
+char* getenv(const char* name);
+
 char* itoa(long, char*, int);
 int   atoi(const char*);
 long  atol(const char*);

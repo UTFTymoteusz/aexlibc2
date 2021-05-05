@@ -79,10 +79,10 @@ int putc(int i, FILE* stream) {
 }
 
 int mode_from_str(const char* mode) {
-    if (strcmp(mode, "r"))
+    if (strcmp(mode, "r") == 0)
         return 1;
 
-    if (strcmp(mode, "w"))
+    if (strcmp(mode, "w") == 0)
         return 2;
 
     if (mode[1] == '+')

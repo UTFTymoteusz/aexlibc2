@@ -29,7 +29,7 @@ FILE* fopen(const char* filename, const char* mode) {
     return file;
 }
 
-size_t fread(const void* ptr, size_t size, size_t nitems, FILE* stream) {
+size_t fread(void* ptr, size_t size, size_t nitems, FILE* stream) {
     return syscall(SYS_READ, stream->handle, ptr, size * nitems);
 }
 
@@ -44,8 +44,8 @@ int fclose(FILE* stream) {
     return ret;
 }
 
-long fseek(FILE* stream, long offset, int mode) {
-    return syscall(SYS_SEEK, stream->handle, offset, mode);
+int fseek(FILE* stream, long offset, int mode) {
+    return syscall(SYS_SEEK, stream->handle, offset, mode) >= 0 ? 0 : -1;
 }
 
 long ftell(FILE* stream) {

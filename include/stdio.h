@@ -21,11 +21,15 @@ extern FILE _stdin, _stdout, _stderr;
 #define STDOUT_FILENO 1
 #define STDERR_FILENO 2
 
+#define SEEK_SET 0
+#define SEEK_CUR 1
+#define SEEK_END 2
+
 FILE*  fopen(const char* filename, const char* mode);
-size_t fread(const void* ptr, size_t size, size_t nitems, FILE* stream);
+size_t fread(void* ptr, size_t size, size_t nitems, FILE* stream);
 size_t fwrite(const void* ptr, size_t size, size_t nitems, FILE* stream);
 int    fclose(FILE* stream);
-long   fseek(FILE* stream, long offset, int mode);
+int    fseek(FILE* stream, long offset, int mode);
 long   ftell(FILE* stream);
 int    fileno(FILE* stream);
 

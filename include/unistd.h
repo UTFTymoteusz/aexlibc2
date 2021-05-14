@@ -45,6 +45,9 @@ int setgid(gid_t gid);
 int setuid(uid_t uid);
 int setregid(gid_t rgid, gid_t egid);
 int setreuid(uid_t ruid, uid_t euid);
+
+int unlink(const char* path);
+
 /*
 unsigned     alarm(unsigned);
 int          chown(const char *, uid_t, gid_t);
@@ -99,6 +102,5 @@ int          tcsetpgrp(int, pid_t);
 int          truncate(const char *, off_t);
 char        *ttyname(int);
 int          ttyname_r(int, char *, size_t);
-int          unlink(const char *);
 int          unlinkat(int, const char *, int);
 */

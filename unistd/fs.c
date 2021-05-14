@@ -43,3 +43,7 @@ int isatty(int fd) {
 int access(const char* path, int mode) {
     return syscall(SYS_ACCESS, path, mode);
 }
+
+int unlink(const char* path) {
+    return syscall(SYS_UNLINK, path);
+}

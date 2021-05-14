@@ -1,6 +1,7 @@
 #include "stdio.h"
 
 #include "errno.h"
+#include "fcntl.h"
 #include "stdlib.h"
 #include "string.h"
 #include "syscallids.h"
@@ -19,7 +20,7 @@ void stdio_init() {
 }
 
 FILE* fopen(const char* filename, const char* mode) {
-    long ret = syscall(SYS_OPEN, filename, mode_from_str(mode));
+    long ret = syscall(SYS_OPEN, filename, mode_from_str(mode) | O_CREAT);
     if (ret < 0)
         return NULL;
 

@@ -79,6 +79,10 @@ int putc(int i, FILE* stream) {
     return fwrite(&c, 1, 1, stream);
 }
 
+int rename(const char* old, const char* new) {
+    return syscall(SYS_RENAME, old, new);
+}
+
 int mode_from_str(const char* mode) {
     if (strcmp(mode, "r") == 0)
         return 1;

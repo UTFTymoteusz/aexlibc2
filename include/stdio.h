@@ -43,6 +43,8 @@ int getc(FILE* stream);
 int putchar(int c);
 int putc(int c, FILE* stream);
 
+int rename(const char* old, const char* new);
+
 void perror(const char* string);
 
 int puts(const char* str);

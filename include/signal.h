@@ -94,6 +94,7 @@ enum signal_t {
     SIGSYS    = 31,
 };
 
+typedef int      sig_atomic_t;
 typedef uint32_t sigset_t;
 
 union sigval {

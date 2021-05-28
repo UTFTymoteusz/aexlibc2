@@ -48,7 +48,7 @@ all: $(OBJS)
 include $(shell find $(DEP_DEST) -type f -name *.d)
 
 copy:
-	@cp $(OBJ_DEST)libc.a "$(COPY_DIR)"
+	@cp -u $(OBJ_DEST)libc.a "$(COPY_DIR)"
 
 clean:
 	rm -rf $(BIN)

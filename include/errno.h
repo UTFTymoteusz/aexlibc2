@@ -82,3 +82,4 @@ enum error_t {
 };
 
 extern __thread int errno;
+#define errno errno

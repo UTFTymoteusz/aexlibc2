@@ -33,3 +33,13 @@ typedef int64_t time_t;
 typedef int64_t clock_t;
 
 typedef int timer_t;
+
+// bashbongs
+typedef int16_t  bits16_t;
+typedef uint16_t u_bits16_t;
+typedef int32_t  bits32_t;
+typedef uint32_t u_bits32_t;
+typedef char*    bits64_t;
+
+typedef unsigned int  u_int;
+typedef unsigned long u_long;

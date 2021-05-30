@@ -6,7 +6,7 @@
 #include "stdint.h"
 
 const char* error_names[128] = {
-    [ENONE]           = "None",
+    [ENONE]           = "Success",
     [E2BIG]           = "Argument list too long",
     [EACCES]          = "Permission denied",
     [EADDRINUSE]      = "Address already in use",
@@ -86,6 +86,9 @@ const char* error_names[128] = {
     [ETIMEDOUT]       = "Connection timed out",
 };
 
+#define min(a, b) (a > b ? b : a)
+#define max(a, b) (a < b ? b : a)
+
 void reverse(char str[], int length) {
     int  start = 0;
     int  end   = length - 1;
@@ -100,9 +103,10 @@ void reverse(char str[], int length) {
         end--;
     }
 }
+
 int memcmp(const void* aptr, const void* bptr, size_t size) {
-    const unsigned char* a = (const unsigned char*) aptr;
-    const unsigned char* b = (const unsigned char*) bptr;
+    const uint8_t* a = (const uint8_t*) aptr;
+    const uint8_t* b = (const uint8_t*) bptr;
 
     for (size_t i = 0; i < size; i++) {
         if (a[i] < b[i])
@@ -114,8 +118,8 @@ int memcmp(const void* aptr, const void* bptr, size_t size) {
 }
 
 void* memcpy(void* dstptr, const void* srcptr, size_t size) {
-    unsigned char*       dst = (unsigned char*) dstptr;
-    const unsigned char* src = (const unsigned char*) srcptr;
+    uint8_t*       dst = (uint8_t*) dstptr;
+    const uint8_t* src = (const uint8_t*) srcptr;
 
     for (size_t i = 0; i < size; i++)
         dst[i] = src[i];
@@ -123,9 +127,28 @@ void* memcpy(void* dstptr, const void* srcptr, size_t size) {
     return dstptr;
 }
 
+void* memccpy(void* _dst, const void* _src, int c, size_t n) {
+    uint8_t*       dst = (uint8_t*) _dst;
+    const uint8_t* src = (const uint8_t*) _src;
+
+    for (size_t i = 0; i < n; i++) {
+        dst[i] = src[i];
+
+        if (dst[i] == c)
+            return &dst[i + 1];
+    }
+
+    return NULL;
+}
+
+void* mempcpy(void* dst, void* src, size_t n) {
+    memcpy(dst, src, n);
+    return (void*) &((char*) dst)[n];
+}
+
 void* memmove(void* dstptr, const void* srcptr, size_t size) {
-    unsigned char*       dst = (unsigned char*) dstptr;
-    const unsigned char* src = (const unsigned char*) srcptr;
+    uint8_t*       dst = (uint8_t*) dstptr;
+    const uint8_t* src = (const uint8_t*) srcptr;
 
     if (dst < src) {
         for (size_t i = 0; i < size; i++)
@@ -135,15 +158,39 @@ void* memmove(void* dstptr, const void* srcptr, size_t size) {
         for (size_t i = size; i != 0; i--)
             dst[i - 1] = src[i - 1];
     }
+
     return dstptr;
 }
 
 void* memset(void* bufptr, int value, size_t size) {
-    unsigned char* buf = (unsigned char*) bufptr;
+    uint8_t* buf = (uint8_t*) bufptr;
     for (size_t i = 0; i < size; i++)
-        buf[i] = (unsigned char) value;
+        buf[i] = (uint8_t) value;
 
     return bufptr;
+}
+
+void* memchr(const void* str, int c, size_t n) {
+    uint8_t* buf = (uint8_t*) str;
+    for (size_t i = 0; i < n; i++)
+        if (buf[i] == c)
+            return (void*) &buf[i];
+
+    return NULL;
+}
+
+char* stpcpy(char* dst, const char* src) {
+    return strcpy(dst, src) + strlen(src);
+}
+
+char* strcat(char* dst, const char* src) {
+    char* origin = dst;
+
+    while (*dst != '\0')
+        dst++;
+
+    strcpy(dst, src);
+    return origin;
 }
 
 int strcmp(const char* left, const char* right) {
@@ -167,10 +214,60 @@ char* strcpy(char* dst, const char* src) {
 
     while (src[i] != '\0') {
         dst[i] = src[i];
-        ++i;
+        i++;
     }
+
     dst[i] = '\0';
     return dst;
+}
+
+char* strncpy(char* dst, const char* src, size_t n) {
+    size_t len = min(strlen(src), n);
+    if (len == 0)
+        return dst;
+
+    memset(dst + n, '\0', n - len);
+    memcpy(dst, src, n);
+
+    return dst;
+}
+
+size_t strcspn(const char* str, const char* bongs) {
+    size_t n    = 0;
+    size_t cmps = strlen(bongs);
+
+    while (str[n] != '\0') {
+        for (size_t i = 0; i < cmps; i++)
+            if (str[n] == bongs[i])
+                return n;
+
+        n++;
+    }
+
+    return n;
+}
+
+char* strdup(const char* str) {
+    return strcpy(malloc(strlen(str) + 1), str);
+}
+
+char* strerror(int errnum) {
+    if (errnum < 0 || errnum >= ETIMEDOUT)
+        return (char*) "Unknown";
+
+    return (char*) error_names[errnum];
+}
+
+int strerror_r(int errnum, char* buf, size_t n) {
+    char* name = strerror(errnum);
+
+    strncpy(buf, name, n - 1);
+    buf[n - 1] = '\0';
+
+    if (strlen(name) + 1 > n)
+        return ERANGE;
+
+    return 0;
 }
 
 size_t strlen(const char* str) {
@@ -181,13 +278,98 @@ size_t strlen(const char* str) {
     return len;
 }
 
-char* strerror(int errnum) {
-    if (errnum < 0 || errnum >= ETIMEDOUT)
-        return (char*) "Unknown";
+char* strpbrk(const char* str, const char* bongs) {
+    size_t len = strcspn(str, bongs);
+    return len ? str + len : NULL;
+}
 
-    return (char*) error_names[errnum];
+size_t strspn(const char* str, const char* bongs) {
+    size_t n    = 0;
+    size_t cmps = strlen(bongs);
+
+    while (str[n] != '\0') {
+        bool safe = false;
+
+        for (size_t i = 0; i < cmps; i++)
+            if (str[n] == bongs[i]) {
+                safe = true;
+                break;
+            }
+
+        if (!safe)
+            break;
+
+        n++;
+    }
+
+    return n;
+}
+
+char* strstr(const char* str, const char* str2) {
+    size_t strl  = strlen(str);
+    size_t str2l = strlen(str2);
+
+    if (strl < str2l)
+        return NULL;
+
+    for (size_t i = 0; i < strl - str2l + 1; i++) {
+        if (memcmp(str + i, str2, str2l) == 0)
+            return str + i;
+    }
+
+    return NULL;
+}
+
+char* strtok(char* str, const char* delims) {
+    static char* current_str;
+    return strtok_r(str, delims, &current_str);
+}
+
+char* strtok_r(char* str, const char* delims, char** saveptr) {
+    if (str) {
+        size_t len = strspn(str, delims);
+        if (len == 0)
+            if (*str == '\0')
+                return NULL;
+
+        *saveptr = str + len;
+    }
+
+    size_t tok_len = strcspn(*saveptr, delims);
+    if (tok_len == 0)
+        return 0;
+
+    char* token = *saveptr;
+    *saveptr += tok_len;
+
+    size_t delim_len = strspn(*saveptr, delims);
+
+    **saveptr = '\0';
+    *saveptr += delim_len;
+
+    return token;
 }
 
 int strcoll(const char* s1, const char* s2) {
     return strcmp(s1, s2);
+}
+
+char* strchr(const char* str, int c) {
+    size_t len = strlen(str);
+
+    for (size_t i = 0; i < len; i++)
+        if (str[i] == c)
+            return (char*) &str[i];
+
+    return NULL;
+}
+
+char* strrchr(const char* str, int c) {
+    size_t len = strlen(str);
+
+    for (size_t i = len - 1; i > 0; i--)
+        if (str[i] == c)
+            return (char*) &str[i];
+
+    return NULL;
 }

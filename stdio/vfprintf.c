@@ -29,8 +29,8 @@ int vfprintf(FILE* stream, const char* format, va_list args) {
 
             switch (c) {
             case 's': {
-                char* str = va_arg(args, char*);
-                int   len = strlen(str);
+                char*  str = va_arg(args, char*);
+                size_t len = strlen(str);
 
                 print(str, len, stream);
 

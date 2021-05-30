@@ -43,7 +43,7 @@ bool getenvline(int index) {
 }
 
 char* getenv(const char* name) {
-    int name_len = strlen(name);
+    size_t name_len = strlen(name);
 
     for (int i = 0; getenvline(i); i++) {
         if (memcmp(name, env_buffer, name_len) != 0 || env_buffer[name_len] != '=')

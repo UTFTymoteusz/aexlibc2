@@ -37,6 +37,7 @@ int vfprintf(FILE* stream, const char* format, va_list parameters);
 int printf(const char* format, ...);
 int fprintf(FILE* stream, const char* format, ...);
 int sprintf(char* dst, const char* format, ...);
+int snprintf(char* dst, size_t n, const char* format, ...);
 
 int getchar();
 int getc(FILE* stream);

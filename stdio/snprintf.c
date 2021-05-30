@@ -15,14 +15,18 @@ static int sprintf_cb(void* dst, const char* data, size_t amnt) {
     return amnt;
 }
 
-int sprintf(char* dst, const char* format, ...) {
+int snprintf(char* dst, size_t n, const char* format, ...) {
+    if (n == 0)
+        return 0;
+
     va_list args;
     va_start(args, format);
 
     struct buffer_info info;
     info.buffer = dst;
 
-    int ret = printf_common(sprintf_cb, &info, 65536, format, args);
+    int ret  = printf_common(sprintf_cb, &info, n - 1, format, args);
+    dst[ret] = '\0';
 
     va_end(args);
     return ret;

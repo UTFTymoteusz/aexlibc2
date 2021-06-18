@@ -31,6 +31,7 @@ pid_t fork();
 int   execve(const char* path, char* const argv[], char* const envp[]);
 pid_t getpid();
 int   nice(int nice);
+pid_t setsid();
 
 int gethostname(char*, size_t);
 
@@ -38,6 +39,8 @@ gid_t getegid();
 uid_t geteuid();
 gid_t getgid();
 uid_t getuid();
+pid_t getpgrp();
+pid_t setpgrp();
 
 int setegid(gid_t gid);
 int seteuid(uid_t uid);
@@ -47,6 +50,9 @@ int setregid(gid_t rgid, gid_t egid);
 int setreuid(uid_t ruid, uid_t euid);
 
 int unlink(const char* path);
+
+pid_t tcgetpgrp(int fd);
+int   tcsetpgrp(int fd, pid_t pgrp);
 
 /*
 unsigned     alarm(unsigned);
@@ -75,7 +81,6 @@ char        *getlogin(void);
 int          getlogin_r(char *, size_t);
 int          getopt(int, char * const [], const char *);
 pid_t        getpgid(pid_t);
-pid_t        getpgrp(void);
 pid_t        getppid(void);
 pid_t        getsid(pid_t);
 int          lchown(const char *, uid_t, gid_t);
@@ -90,15 +95,11 @@ ssize_t      readlink(const char *restrict, char *restrict, size_t);
 ssize_t      readlinkat(int, const char *restrict, char *restrict, size_t);
 int          rmdir(const char *);
 int          setpgid(pid_t, pid_t);
-pid_t        setpgrp(void);
-pid_t        setsid(void);
 void         swab(const void *restrict, void *restrict, ssize_t);
 int          symlink(const char *, const char *);
 int          symlinkat(const char *, int, const char *);
 void         sync(void);
 long         sysconf(int);
-pid_t        tcgetpgrp(int);
-int          tcsetpgrp(int, pid_t);
 int          truncate(const char *, off_t);
 char        *ttyname(int);
 int          ttyname_r(int, char *, size_t);

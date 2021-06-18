@@ -1,5 +1,6 @@
 #include "stddef.h"
 #include "stdint.h"
+#include "sys/ioctl.h"
 #include "sys/types.h"
 #include "syscallids.h"
 #include "unistd.h"
@@ -46,4 +47,12 @@ int access(const char* path, int mode) {
 
 int unlink(const char* path) {
     return syscall(SYS_UNLINK, path);
+}
+
+pid_t tcgetpgrp(int fd) {
+    return ioctl(fd, 0x08);
+}
+
+int tcsetpgrp(int fd, pid_t pgrp) {
+    return ioctl(fd, 0x09, pgrp);
 }

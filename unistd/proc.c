@@ -27,3 +27,7 @@ pid_t getpid() {
 int nice(int nice) {
     return syscall(SYS_NICE, nice);
 }
+
+pid_t setsid() {
+    return syscall(SYS_SETSID);
+}

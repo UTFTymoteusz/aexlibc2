@@ -22,7 +22,8 @@ int sprintf(char* dst, const char* format, ...) {
     struct buffer_info info;
     info.buffer = dst;
 
-    int ret = printf_common(sprintf_cb, &info, 65536, format, args);
+    int ret  = printf_common(sprintf_cb, &info, 65536, format, args);
+    dst[ret] = '\0';
 
     va_end(args);
     return ret;

@@ -4,6 +4,7 @@
 #include "stdbool.h"
 #include "stddef.h"
 #include "stdint.h"
+#include "stdlib.h"
 
 const char* error_names[128] = {
     [ENONE]           = "Success",
@@ -141,7 +142,7 @@ void* memccpy(void* _dst, const void* _src, int c, size_t n) {
     return NULL;
 }
 
-void* mempcpy(void* dst, void* src, size_t n) {
+void* mempcpy(void* dst, const void* src, size_t n) {
     memcpy(dst, src, n);
     return (void*) &((char*) dst)[n];
 }
@@ -194,18 +195,27 @@ char* strcat(char* dst, const char* src) {
 }
 
 int strcmp(const char* left, const char* right) {
-    int i = 0;
-
-    while (true) {
+    for (size_t i = 0;; i++) {
         if (left[i] == right[i]) {
             if (left[i] == '\0')
                 return 0;
         }
         else
             return left[i] < right[i] ? -1 : 1;
-
-        ++i;
     }
+    return 0;
+}
+
+int strncmp(const char* left, const char* right, size_t n) {
+    for (size_t i = 0; i < n; i++) {
+        if (left[i] == right[i]) {
+            if (left[i] == '\0')
+                return 0;
+        }
+        else
+            return left[i] < right[i] ? -1 : 1;
+    }
+
     return 0;
 }
 
@@ -337,7 +347,7 @@ char* strtok_r(char* str, const char* delims, char** saveptr) {
 
     size_t tok_len = strcspn(*saveptr, delims);
     if (tok_len == 0)
-        return 0;
+        return NULL;
 
     char* token = *saveptr;
     *saveptr += tok_len;

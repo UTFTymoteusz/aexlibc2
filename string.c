@@ -236,7 +236,7 @@ char* strncpy(char* dst, const char* src, size_t n) {
     if (len == 0)
         return dst;
 
-    memset(dst + n, '\0', n - len);
+    memset(dst + len, '\0', n - len);
     memcpy(dst, src, n);
 
     return dst;
@@ -377,7 +377,7 @@ char* strchr(const char* str, int c) {
 char* strrchr(const char* str, int c) {
     size_t len = strlen(str);
 
-    for (size_t i = len - 1; i > 0; i--)
+    for (size_t i = len - 1; i >= 0; i--)
         if (str[i] == c)
             return (char*) &str[i];
 

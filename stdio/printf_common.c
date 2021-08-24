@@ -293,8 +293,11 @@ int printf_common(int (*write_cb)(void* dst, const char* data, size_t amnt), voi
             }
 
             if (c == 's') {
-                char* str  = va_arg(args, char*);
-                int   amnt = print(write_cb, dst, limit, str, NULL, pad_char, pad_len, pad_side);
+                char* str = va_arg(args, char*);
+                if (!str)
+                    str = "(null)";
+
+                int amnt = print(write_cb, dst, limit, str, NULL, pad_char, pad_len, pad_side);
 
                 written += amnt;
                 limit -= amnt;

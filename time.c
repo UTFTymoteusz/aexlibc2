@@ -15,6 +15,6 @@ int nanosleep(const struct timespec* rqtp, struct timespec* rmtp) {
         return -1;
     }
 
-    syscall(SYS_USLEEP, (long) rqtp->tv_nsec);
+    syscall(SYS_NSLEEP, (long) rqtp->tv_sec * 1000000000 + (long) rqtp->tv_nsec);
     return 0;
 }

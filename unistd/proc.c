@@ -2,12 +2,12 @@
 #include "unistd.h"
 
 unsigned int sleep(unsigned int seconds) {
-    syscall(SYS_USLEEP, (long) seconds * 1000000000);
+    syscall(SYS_NSLEEP, (long) seconds * 1000000000);
     return 0;
 }
 
-int usleep(long ns) {
-    syscall(SYS_USLEEP, ns);
+int nsleep(long ns) {
+    syscall(SYS_NSLEEP, ns);
     return 0;
 }
 
@@ -30,4 +30,12 @@ int nice(int nice) {
 
 pid_t setsid() {
     return syscall(SYS_SETSID);
+}
+
+pid_t getpgrp() {
+    return -1;
+}
+
+pid_t setpgrp() {
+    return -1;
 }

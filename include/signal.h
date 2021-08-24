@@ -2,6 +2,8 @@
 
 #include <sys/types.h>
 
+#include <time.h>
+
 #define SA_SIGINFO 0x01
 #define SA_RESTORER 0x02
 
@@ -60,6 +62,10 @@
 #define SIG_CONT ((void (*)(int)) 0x04)
 #define SIG_DFL ((void (*)(int)) 0x05)
 
+#define SIG_BLOCK 0
+#define SIG_UNBLOCK 1
+#define SIG_SETMASK 2
+
 enum signal_t {
     SIGHUP    = 1,
     SIGINT    = 2,
@@ -92,17 +98,22 @@ enum signal_t {
     SIGIO     = 29,
     SIGPWR    = 30,
     SIGSYS    = 31,
+    SIGCNCL   = 64,
 };
 
-typedef int      sig_atomic_t;
-typedef uint32_t sigset_t;
+typedef int sig_atomic_t;
+
+struct sigset {
+    uint32_t quads[4];
+};
+typedef struct sigset sigset_t;
 
 union sigval {
-    int   sigval_int;
-    void* sigval_ptr;
+    int   sival_int;
+    void* sival_ptr;
 };
 
-struct siginfo_t {
+struct siginfo {
     int si_signo;
     int si_code;
 
@@ -116,6 +127,7 @@ struct siginfo_t {
     long         si_band;
     union sigval si_value;
 };
+typedef struct siginfo siginfo_t;
 
 struct sigaction {
     void (*sa_handler)(int);
@@ -125,9 +137,26 @@ struct sigaction {
     void (*sa_restorer)(void);
 };
 
+int raise(int sig);
 int kill(pid_t pid, int sig);
 int killpg(pid_t pgrp, int sig);
+void (*signal(int sig, void (*func)(int sig)))(int sig);
+int sigqueue(pid_t pid, int sig, const union sigval val);
 int sigaction(int signum, const struct sigaction* act, struct sigaction* oldact);
-
-// temporary
-void sigret();
+int sigprocmask(int how, const sigset_t* set, sigset_t* oldset);
+int sigwait(const sigset_t* set, int* sig);
+int sigwaitinfo(const sigset_t* set, siginfo_t* info);
+int sigtimedwait(const sigset_t* set, siginfo_t* info, const struct timespec* timeout);
+int sighold(int sig);
+int sigrelse(int sig);
+int sigignore(int sig);
+int pthread_kill(pthread_t thread, int signal);
+int pthread_sigmask(int how, const sigset_t* set, sigset_t* oldset);
+int sigpending(sigset_t* set);
+int sigsuspend(const sigset_t* mask);
+int sigpause(int sig);
+int sigemptyset(sigset_t* set);
+int sigfillset(sigset_t* set);
+int sigaddset(sigset_t* set, int sig);
+int sigdelset(sigset_t* set, int sig);
+int sigismember(const sigset_t* set, int sig);

@@ -2,7 +2,7 @@
 
 #include "stdio.h"
 
-__thread int errno = 0;
+__thread int errno = ENOSYS;
 
 void _set_errno(int boii) {
     errno = boii;

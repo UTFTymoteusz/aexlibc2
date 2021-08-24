@@ -23,6 +23,8 @@ syscall:
     ; r9      e
     pop r10 ; f
 
+    xor r10, r10
+
     syscall
     sub rsp, 8
 

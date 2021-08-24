@@ -67,7 +67,7 @@ size_t fread(void* ptr, size_t size, size_t nitems, FILE* stream) {
     if (bytes < size)
         stream->eof = true;
 
-    return bytes;
+    return bytes / size;
 }
 
 size_t fwrite(const void* ptr, size_t size, size_t nitems, FILE* stream) {
@@ -75,7 +75,7 @@ size_t fwrite(const void* ptr, size_t size, size_t nitems, FILE* stream) {
     if (bytes < size)
         stream->eof = true;
 
-    return bytes;
+    return bytes / size;
 }
 
 int fclose(FILE* stream) {
@@ -95,7 +95,7 @@ long ftell(FILE* stream) {
     return syscall(SYS_SEEK, stream->handle, 0, 1) - (stream->unchar != -1 ? 1 : 0);
 }
 
-int fflush(FILE*) {
+int fflush(FILE* file) {
     return 0;
 }
 

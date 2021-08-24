@@ -1,16 +1,15 @@
 SECTION .text
 
-EXTERN _init
+EXTERN init
 EXTERN main
 EXTERN exit
-EXTERN stdio_init
 
 GLOBAL _start
 _start:
     push rdi
     push rsi
 
-    call stdio_init
+    call init
 
     pop rsi
     pop rdi

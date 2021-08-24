@@ -27,6 +27,7 @@ typedef int64_t  off_t;
 typedef int64_t  nlink_t;
 
 typedef id_t pid_t;
+typedef id_t tid_t;
 
 typedef int64_t suseconds_t;
 typedef int64_t time_t;
@@ -43,3 +44,11 @@ typedef char*    bits64_t;
 
 typedef unsigned int  u_int;
 typedef unsigned long u_long;
+
+// pthreadbongs
+typedef tid_t pthread_t;
+
+struct pthread_attr {
+    int stack_size;
+};
+typedef struct pthread_attr pthread_attr_t;

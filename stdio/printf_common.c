@@ -57,7 +57,7 @@ void printf_int(char buffer[128], printf_size_t size, bool force_sign, va_list a
     }
 }
 
-void printf_uint(char buffer[128], printf_size_t size, bool, va_list args) {
+void printf_uint(char buffer[128], printf_size_t size, bool force_sign, va_list args) {
     switch (size) {
     case SIZE_CHAR: {
         unsigned char i = va_arg(args, unsigned int);
@@ -82,7 +82,7 @@ void printf_uint(char buffer[128], printf_size_t size, bool, va_list args) {
     }
 }
 
-void printf_oct(char buffer[128], printf_size_t size, bool, va_list args) {
+void printf_oct(char buffer[128], printf_size_t size, bool force_sign, va_list args) {
     switch (size) {
     case SIZE_CHAR: {
         unsigned char i = va_arg(args, unsigned int);
@@ -107,7 +107,7 @@ void printf_oct(char buffer[128], printf_size_t size, bool, va_list args) {
     }
 }
 
-void printf_hex(char buffer[128], printf_size_t size, bool, va_list args) {
+void printf_hex(char buffer[128], printf_size_t size, bool force_sign, va_list args) {
     switch (size) {
     case SIZE_CHAR: {
         unsigned char i = va_arg(args, unsigned int);
@@ -141,12 +141,12 @@ void printf_hex_upper(char buffer[128], printf_size_t size, bool force_sign, va_
     }
 }
 
-void printf_char(char buffer[128], printf_size_t, bool, va_list args) {
+void printf_char(char buffer[128], printf_size_t size, bool force_sign, va_list args) {
     buffer[0] = va_arg(args, int);
     buffer[1] = '\0';
 }
 
-void printf_pointer(char buffer[128], printf_size_t, bool, va_list args) {
+void printf_pointer(char buffer[128], printf_size_t size, bool force_sign, va_list args) {
     buffer[0] = '0';
     buffer[1] = 'x';
     buffer += 2;
@@ -156,9 +156,9 @@ void printf_pointer(char buffer[128], printf_size_t, bool, va_list args) {
 }
 
 printf_type_t printf_types[] = {
-    {'d', "", printf_int},  {'i', "", printf_int},     {'u', "", printf_uint},
-    {'o', "0", printf_oct}, {'x', "0x", printf_hex},   {'X', "0X", printf_hex_upper},
-    {'c', "", printf_char}, {'p', "", printf_pointer}, {'%', "", 0},
+    {'d', "", printf_int},  {'i', "", printf_int},       {'u', "", printf_uint},
+    {'o', "0", printf_oct}, {'x', "0x", printf_hex},     {'X', "0X", printf_hex_upper},
+    {'c', "", printf_char}, {'p', "0x", printf_pointer}, {'%', "", NULL},
 };
 
 static int print(int (*write_cb)(void* dst, const char* data, size_t amnt), void* dst, size_t left,

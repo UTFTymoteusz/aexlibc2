@@ -198,15 +198,14 @@ void debug_print_pools() {
     pool_t* pool = first_pool;
 
     while (true) {
-        printf("pool 0x%p: 0x%p-0x%p\n", pool, ((size_t) pool + PIECE_SIZE * 2),
+        printf("pool %p: %p-%p\n", pool, ((size_t) pool + PIECE_SIZE * 2),
                ((size_t) pool + PIECE_SIZE * 2 + pool->pieces * PIECE_SIZE));
         uint32_t start = 0;
 
         while (true) {
             chunk_t* chunk = get_chunk(pool, start);
 
-            printf("  chunk 0x%p: 0x%p-0x%p [%i] p0x%p n0x%p\n", chunk,
-                   ((size_t) chunk + PIECE_SIZE),
+            printf("  chunk %p: %p-%p [%i] p%p n%p\n", chunk, ((size_t) chunk + PIECE_SIZE),
                    ((size_t) chunk + PIECE_SIZE + chunk->pieces * PIECE_SIZE), chunk->free,
                    ((size_t) pool + PIECE_SIZE * 2 + chunk->prev * PIECE_SIZE),
                    ((size_t) pool + PIECE_SIZE * 2 + chunk->next * PIECE_SIZE));

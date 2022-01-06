@@ -21,9 +21,13 @@ INCLUDES := -I. -Iinclude/ -Iarch/$(ARCH)/ -Iarch/$(ARCH)/include/
 
 CCFLAGS := $(GFLAGS)		\
 	-ffreestanding			\
+	-std=c11                \
 	-masm=intel				\
 	-fno-stack-protector	\
 	-fno-omit-frame-pointer \
+    -fno-inline \
+    -fno-inline-small-functions \
+    -fno-optimize-sibling-calls \
 	$(INCLUDES)
 
 ASFLAGS := -felf64
@@ -38,19 +42,19 @@ format:
 	clang-format -style=file -i ${CFILES} ${HFILES}
 
 all: $(OBJS)
-	@printf '\033[0;93mlibc\033[0m: Building \033[0;93mcrt0.asm\033[0m\033[0K\r'
+	@printf '\033[0;93m%-10s\033[0m: Building \033[0;93mcrt0.asm\033[0m\033[0K\r' libc
 	@$(AS) $(ASFLAGS) -o $(OBJ_DEST)crt0.o crt0.asm
 
-	@printf '\033[0;93mlibc\033[0m: Building \033[0;93mcrti.asm\033[0m\033[0K\r'
+	@printf '\033[0;93m%-10s\033[0m: Building \033[0;93mcrti.asm\033[0m\033[0K\r' libc
 	@$(AS) $(ASFLAGS) -o $(OBJ_DEST)crti.o crti.asm
 
-	@printf '\033[0;93mlibc\033[0m: Building \033[0;93mcrtn.asm\033[0m\033[0K\r'
+	@printf '\033[0;93m%-10s\033[0m: Building \033[0;93mcrtn.asm\033[0m\033[0K\r' libc
 	@$(AS) $(ASFLAGS) -o $(OBJ_DEST)crtn.o crtn.asm
 
 	@$(MKDIR) $(BIN)
 	ar r $(OBJ_DEST)libc.a ${OBJS}
 
-	@printf '\033[0;93mlibc\033[0m: Done building\033[0K\n'
+	@printf '\033[0;93m%-10s\033[0m: Done building\033[0K\n' libc
 
 include $(shell find $(DEP_DEST) -type f -name *.d)
 
@@ -64,13 +68,13 @@ $(OBJ_DEST)%.c.o : %.c
 	@$(MKDIR) ${@D}
 	@$(MKDIR) $(dir $(DEP_DEST)$*)
 
-	@printf '\033[0;93mlibc\033[0m: Building \033[0;93m$(<)\033[0m\033[0K\r'
+	@printf '\033[0;93m%-10s\033[0m: Building \033[0;93m$(<)\033[0m\033[0K\r' libc
 	@$(CC) $(CCFLAGS) -c $< -o $@ -MMD -MT $@ -MF $(DEP_DEST)$*.c.d
 
 $(OBJ_DEST)%.asm.o : %.asm
 	@$(MKDIR) ${@D}
 
-	@printf '\033[0;93mlibc\033[0m: Building \033[0;93m$(<)\033[0m\033[0K\r'
+	@printf '\033[0;93m%-10s\033[0m: Building \033[0;93m$(<)\033[0m\033[0K\r' libc
 	@$(AS) $(ASFLAGS) $< -o $@
 
 install:

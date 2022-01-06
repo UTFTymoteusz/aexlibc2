@@ -1,6 +1,7 @@
 #include "dirent.h"
 
 #include "errno.h"
+#include "fcntl.h"
 #include "stdlib.h"
 #include "string.h"
 #include "sys/stat.h"
@@ -29,7 +30,7 @@ DIR* opendir(const char* path) {
         return NULL;
     }
 
-    int handle = syscall(SYS_OPEN, path, 1);
+    int handle = syscall(SYS_OPEN, path, O_RDONLY | O_DIRECTORY);
     if (handle == -1)
         return NULL;
 

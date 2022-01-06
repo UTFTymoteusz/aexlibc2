@@ -23,7 +23,7 @@ void pthread_init() {
     sigaction(SIGCNCL, &act, NULL);
 }
 
-void pthread_sighandler(int) {
+void pthread_sighandler(int sig) {
     pthread_cancelled = true;
     pthread_handlecancel();
 }

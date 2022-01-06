@@ -2,7 +2,7 @@
 #include "printf_common.h"
 #include "stdio.h"
 
-int vprintf_cb(void*, const char* data, size_t amnt) {
+int vprintf_cb(void* dst, const char* data, size_t amnt) {
     fwrite(data, amnt, 1, stdout);
     return amnt;
 }
